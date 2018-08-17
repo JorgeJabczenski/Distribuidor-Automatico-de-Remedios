@@ -1,41 +1,46 @@
 
 //====================RELÓGIO===================================== 
-//Carrega a biblioteca do RTC DS1307
 #include <DS1307.h>
 // RTC DS1307 ligado as portas A4 e A5
 DS1307 rtc(A4, A5);
 //================================================================
 
-
-
-void setup()
-{
-  //Aciona o relogio
-  rtc.halt(false);
-
-/*
-    rtc.setDOW(THURSDAY);      //Define o dia da semana
-    rtc.setTime(1, 18, 0);     //Define o horario
-    rtc.setDate(16, 8, 2018);   //Define o dia, mes e ano
-*/
-
-  //Definicoes do pino SQW/Out
-  rtc.setSQWRate(SQW_RATE_1);
-  rtc.enableSQW(true);
-
-  Serial.begin(9600);
-  pinMode(12, OUTPUT);
-
-}
+//====================VARIÁVEIS===================================
 
 String horaRemedio1 = "01:52:00";
 String horaRemedio2 = "01:53:00";
 String horaRemedio3 = "01:54:00";
 
-bool flagCopo = true;
 bool flagHora = false;
 
-int presencaCopo;
+//================================================================
+
+void setup()
+{
+
+  Serial.begin(9600);
+
+//====================RELÓGIO===================================== 
+  //Aciona o relogio
+  rtc.halt(false);
+/*
+    // Alterar a data/hora
+    rtc.setDOW(THURSDAY);      //Define o dia da semana
+    rtc.setTime(1, 18, 0);     //Define o horario
+    rtc.setDate(16, 8, 2018);  //Define o dia, mes e ano
+
+    //Definicoes do pino SQW/Out
+    rtc.setSQWRate(SQW_RATE_1);
+    rtc.enableSQW(true);
+*/
+//================================================================
+
+
+  pinMode(12, OUTPUT);
+
+}
+
+
 
 void loop()
 {
@@ -57,14 +62,14 @@ void loop()
   }
 
   if (flagHora) {
-    while (analogRead(A1) < 100) {
 
+    while (analogRead(A1) < 100) {
+      // ESPERA ATÉ A RETIRADA DO COPO
     }
     flagHora = false;
     digitalWrite(12, LOW);
   }
 
-  
-  delay(500);
+  delay(1000);
 
 }
